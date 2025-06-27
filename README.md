@@ -32,6 +32,21 @@ $ chmod +x toolbox
 
 ```sh
 $ ./toolbox --tools-file tools.yml
+2025-06-27T16:55:21.625816+09:00 INFO "Server ready to serve!" 
+# localhost:5000 でToolbox Serverが起動します
+```
+
+- 動作確認
+
+```sh
+$ curl http://127.0.0.1:5000
+🧰 Hello, World! 🧰%     
+```
+
+## 動作確認
+
+```
+I want to search Hilton Basel Hotel
 ```
 
 ## 参考

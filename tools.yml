@@ -16,7 +16,7 @@ tools:
     - name: name
       type: string
       description: The name of the hotel.
-    statement: SELECT * FROM `mcp-server-for-big-query.hotels` WHERE LOWER(name) LIKE LOWER(CONCAT('%', @name, '%'));
+    statement: SELECT * FROM `sample.hotels` WHERE LOWER(name) LIKE LOWER(CONCAT('%', @name, '%'));
   search-hotels-by-location:
     kind: bigquery-sql
     source: my-bigquery-source
@@ -25,4 +25,4 @@ tools:
     - name: location
       type: string
       description: The location of the hotel.
-    statement: SELECT * FROM `mcp-server-for-big-query.hotels` WHERE LOWER(location) LIKE LOWER(CONCAT('%', @location, '%'));
+    statement: SELECT * FROM `sample.hotels` WHERE LOWER(location) LIKE LOWER(CONCAT('%', @location, '%'));
