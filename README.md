@@ -25,7 +25,7 @@ $ gcloud auth application-default login
 toolとは、AI Agentが使用する外部リソースへのアクセス手段のことである。
 以下に示すようにAgentが自律的にデータベースにアクセスすることをサポートする。
 
-![alt text](imgs/tool.png.png)
+![alt text](imgs/tool.png)
 
 ### Install Toolbox for Mac
 
@@ -138,7 +138,51 @@ search for Comfort Inn Bern
 
 ![alt text](imgs/demo.png)
 
+## MCP ToolboxとIDEを連携する
+
+### Cursor
+
+`.cursor/mcp.json`
+
+```json
+{
+  "mcpServers": {
+    "bigquery": {
+      "command": "toolbox",
+      "args": ["--prebuilt","bigquery","--stdio"],
+      "env": {
+        "BIGQUERY_PROJECT": "PROJECT_ID"
+      }
+    }
+  }
+}
+```
+### VSCode
+
+- Configure MCP Server
+
+`.vscode/mcp.json`
+
+```json
+{
+  "servers": {
+    "bigquery": {
+      "command": "toolbox",
+      "args": [
+        "--prebuilt",
+        "bigquery",
+        "--stdio"
+      ],
+      "env": {
+        "BIGQUERY_PROJECT": "mcp-server-for-big-query"
+      }
+    }
+  }
+}
+```
+
 ## 参考
 
 - [ADK と MCP Toolbox for Databases を使った BigQuery エージェントの開発 - Zenn](https://zenn.dev/hiracky16/articles/90162823db6a4b44a839)
 - [google-toolbox - GitHub](https://github.com/googleapis/genai-toolbox) 
+- [Connect your IDE to BigQuery using MCP Toolbox - Google Cloud](https://cloud.google.com/bigquery/docs/pre-built-tools-with-mcp-toolbox)

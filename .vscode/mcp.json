@@ -1,0 +1,17 @@
+{
+  "servers": {
+    "bigquery": {
+      "command": "toolbox",
+      "args": [
+        "--tools-file",
+        "tools.yml",
+        "--stdio",
+        "-p",
+        "5001"
+      ],
+      "env": {
+        "BIGQUERY_PROJECT": "mcp-server-for-big-query"
+      }
+    }
+  }
+}
