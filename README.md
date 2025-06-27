@@ -19,7 +19,15 @@
 $ gcloud auth application-default login
 ```
 
-## Install Toolbox for Mac
+## MCP Toolbox for Database
+
+このToolboxはAI Agentがデータベースにアクセスするためのtoolを提供する
+toolとは、AI Agentが使用する外部リソースへのアクセス手段のことである。
+以下に示すようにAgentが自律的にデータベースにアクセスすることをサポートする。
+
+![alt text](imgs/demo.png)
+
+### Install Toolbox for Mac
 
 - Version: [0.7.0](https://github.com/googleapis/genai-toolbox/releases/tag/v0.7.0)
 
@@ -28,7 +36,42 @@ $ wget https://storage.googleapis.com/genai-toolbox/v0.7.0/darwin/arm64/toolbox
 $ chmod +x toolbox
 ```
 
-## Running Toolbox Server
+### Configure Toolbox
+
+- データソースを指定
+
+```yaml
+  my-bigquery-source:
+    kind: bigquery
+    project: mcp-server-for-big-query
+    location: US
+```
+
+- Agentに利用可能なtoolを提供
+
+```yaml
+toolsets:
+  my-toolset: # Toolset name
+  - search-hotels-by-name
+  - search-hotels-by-location
+```
+
+- 具体的なtoolの定義
+
+```yaml
+  search-hotels-by-name:
+    kind: bigquery-sql
+    source: my-bigquery-source # Source name
+    description: Search for hotels based on name. # Description
+    parameters: # Parameters for the SQL query
+    - name: name
+      type: string
+      description: The name of the hotel.
+    # 与えられたホテル名を用いた曖昧検索を行うSQL文
+    statement: SELECT * FROM `sample.hotels` WHERE LOWER(name) LIKE LOWER(CONCAT('%', @name, '%'));
+```
+
+### Running Toolbox Server
 
 ```sh
 $ ./toolbox --tools-file tools.yml
@@ -43,11 +86,57 @@ $ curl http://127.0.0.1:5000
 🧰 Hello, World! 🧰%     
 ```
 
-## 動作確認
+## MCP Server
+
+以上で設定したToolboxとAI Agentを接続し、MCP Serverを構築する。
+
+```py
+toolbox = ToolboxSyncClient("http://127.0.0.1:5000")
+```
+
+Agentにtoolsを引数として渡すことでToolboxを利用できるようになる。
+
+```py
+tools = toolbox.load_toolset("my-toolset")
+
+root_agent = Agent(
+    ...,
+    tools=tools,
+)
+```
+
+### .env　for ADK
+
+```sh
+GOOGLE_GENAI_USE_VERTEXAI=TRUE # Vertex AIを使用する場合はTRUE
+GOOGLE_CLOUD_PROJECT=GCP_PROJECT # Google CloudプロジェクトID
+GOOGLE_CLOUD_LOCATION=global # Vertex AIのロケーション
+```
+
+### Running MCP Server
+
+```sh
+$ cd hotel_agent
+$ adk web
+INFO:     Uvicorn running on http://127.0.0.1:8000 (Press CTRL+C to quit)
+```
+
+- 動作確認
+
+ブラウザで、`localhost:8000`にアクセスし、チャットに`hello`と入力
+何らかのレスポンスが返って来ればOK
+
+## MCP Server for Big Query全体の動作確認
+
+ブラウザで、`localhost:8000`にアクセスし、以下を入力
 
 ```
-I want to search Hilton Basel Hotel
+I want to search Hilton Basel
 ```
+
+下記画像のようなレスポンスが返って来ればOK
+
+![alt text](imgs/demo.png)
 
 ## 参考
 
