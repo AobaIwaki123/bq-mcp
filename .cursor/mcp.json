@@ -2,7 +2,7 @@
   "mcpServers": {
     "bigquery": {
       "command": "toolbox",
-      "args": ["--prebuilt", "bigquery", "--stdio"],
+      "args": ["--prebuilt", "bigquery", "--stdio", "-p", "5002"],
       "env": {
         "BIGQUERY_PROJECT": "mcp-server-for-big-query"
       }
