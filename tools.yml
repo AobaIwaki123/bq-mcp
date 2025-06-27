@@ -1,0 +1,28 @@
+sources:
+  my-bigquery-source:
+    kind: bigquery
+    project: mcp-server-for-big-query
+    location: US
+toolsets:
+  my-toolset:
+  - search-hotels-by-name
+  - search-hotels-by-location
+tools:
+  search-hotels-by-name:
+    kind: bigquery-sql
+    source: my-bigquery-source
+    description: Search for hotels based on name.
+    parameters:
+    - name: name
+      type: string
+      description: The name of the hotel.
+    statement: SELECT * FROM `mcp-server-for-big-query.hotels` WHERE LOWER(name) LIKE LOWER(CONCAT('%', @name, '%'));
+  search-hotels-by-location:
+    kind: bigquery-sql
+    source: my-bigquery-source
+    description: Search for hotels based on location.
+    parameters:
+    - name: location
+      type: string
+      description: The location of the hotel.
+    statement: SELECT * FROM `mcp-server-for-big-query.hotels` WHERE LOWER(location) LIKE LOWER(CONCAT('%', @location, '%'));
