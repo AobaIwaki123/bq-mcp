@@ -1,7 +1,7 @@
 {
   "servers": {
     "bigquery": {
-      "command": "toolbox",
+      "command": "./.vscode/toolbox",
       "args": [
         "--tools-file",
         "tools.yml",
