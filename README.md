@@ -25,7 +25,7 @@ $ gcloud auth application-default login
 toolとは、AI Agentが使用する外部リソースへのアクセス手段のことである。
 以下に示すようにAgentが自律的にデータベースにアクセスすることをサポートする。
 
-![alt text](imgs/demo.png)
+![alt text](imgs/tool.png.png)
 
 ### Install Toolbox for Mac
 
@@ -131,7 +131,7 @@ INFO:     Uvicorn running on http://127.0.0.1:8000 (Press CTRL+C to quit)
 ブラウザで、`localhost:8000`にアクセスし、以下を入力
 
 ```
-I want to search Hilton Basel
+search for Comfort Inn Bern
 ```
 
 下記画像のようなレスポンスが返って来ればOK

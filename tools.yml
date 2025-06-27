@@ -7,6 +7,8 @@ toolsets:
   my-toolset: # Toolset name
   - search-hotels-by-name
   - search-hotels-by-location
+  - list-hotels
+  - list-hotel-name
 tools:
   search-hotels-by-name:
     kind: bigquery-sql
@@ -27,3 +29,15 @@ tools:
       type: string
       description: The location of the hotel.
     statement: SELECT * FROM `sample.hotels` WHERE LOWER(location) LIKE LOWER(CONCAT('%', @location, '%'));
+  list-hotels:
+    kind: bigquery-sql
+    source: my-bigquery-source
+    description: List all hotels.
+    parameters: []
+    statement: SELECT * FROM `sample.hotels`;
+  list-hotel-name:
+    kind: bigquery-sql
+    source: my-bigquery-source
+    description: List all hotel names.
+    parameters: []
+    statement: SELECT name FROM `sample.hotels`;
