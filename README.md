@@ -140,6 +140,24 @@ search for Comfort Inn Bern
 
 ## MCP ToolboxとIDEを連携する
 
+### Windsurf
+
+- Cascade Assistant > MCP > Configure MCP > View Raw Config
+
+```json
+{
+  "mcpServers": {
+    "bigquery": {
+      "command": "./PATH/TO/toolbox",
+      "args": ["--prebuilt","bigquery","--stdio"],
+      "env": {
+        "BIGQUERY_PROJECT": "PROJECT_ID"
+      }
+    }
+  }
+}
+```
+
 ### Cursor
 
 `.cursor/mcp.json`
@@ -158,8 +176,6 @@ search for Comfort Inn Bern
 }
 ```
 ### VSCode
-
-- Configure MCP Server
 
 `.vscode/mcp.json`
 
